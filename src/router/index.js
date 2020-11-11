@@ -8,6 +8,8 @@ import VueRouter from 'vue-router'
 // 建议:如果加载的资源路径就在当前目录下,那就正常写
 //      如果需要进行父级路径查找的都使用@
 import Login from '@/views/login/index.vue'
+import Home from '@/views/home/index.vue'
+import Layout from '@/views/layout/index.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +19,21 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/',
+    // 命名路由layout 有一个默认子路由,这个名字没有意义,只是警告
+    // 正确的做法是:如果有默认路由,就不要给父路由起名字了
+    // name: 'layout',
+    component: Layout,
+    children: [
+      {
+        path: '', // path 为空,会作为默认子路由渲染
+        // 路由的名字是干啥的?
+        name: 'home',
+        component: Home
+      }
+    ]
   }
 ]
 
