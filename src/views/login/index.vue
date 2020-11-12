@@ -123,11 +123,17 @@ export default {
       // 这样做的好处就是:管理维护更方便,也好重要
       login(this.user).then(res => {
         // 登录成功
-        console.log(res)
+        // console.log(res)
         this.$message({
           message: '登录成功',
           type: 'success'
         })
+
+        // 将接口返回的用户相关数据放到本地存储,方便应用数据共享
+        // 本地只能存储字符串
+        // 对象,数组类型的数据,则把他们转为JSON格式字符串进行存储
+        window.localStorage.setItem('user', JSON.stringify(res.data.data))
+
         // 关闭 loading
         this.loginLoading = false
         // 跳转到首页

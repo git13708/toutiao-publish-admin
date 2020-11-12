@@ -1,5 +1,19 @@
 <template>
-  <div class="home-container">首页</div>
+  <div class="home-container">
+    <div class="amap-wrapper">
+      <el-amap
+        ref="map"
+        :vid="'amapDemo'"
+        :center="center"
+        :zoom="zoom"
+        :plugin="plugin"
+        :events="events"
+        :mapStyle="mapStyle"
+        class="amap-demo"
+      >
+      </el-amap>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -12,7 +26,46 @@ export default {
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      center: [106.315739, 29.592531],
+      zoom: 18,
+      mapStyle: 'amap://styles/8b6be8ec497009e17a708205348b899a', // 设置地图样式
+      events: {
+        init (o) {
+          console.log(o.getCenter())
+        },
+        zoomchange: (e) => {
+          console.log(e)
+        },
+        zoomend: (e) => {
+          // 获取当前缩放zoom值
+          console.log(this.$refs.map.$$getInstance().getZoom())
+          console.log(e)
+        },
+        click: e => {
+          alert('map clicked')
+        }
+      },
+      // 使用其他组件
+      plugin: [
+        {
+          pName: 'Scale',
+          events: {
+            init (instance) {
+              console.log(instance)
+            }
+          }
+        },
+        {
+          pName: 'ToolBar',
+          events: {
+            init (instance) {
+              console.log(instance)
+            }
+          }
+        }
+      ]
+    }
   },
   computed: {},
   watch: {},
@@ -23,5 +76,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.home-container {
+  position: absolute;
+  left: 130px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  .amap-wrapper {
+    height: 100%;
+  }
+}
 
 </style>
