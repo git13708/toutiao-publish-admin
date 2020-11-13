@@ -2,6 +2,7 @@
  * 基于 axios 封装的请求模块
  */
 import axios from 'axios'
+import JSONbig from 'json-bigint'
 
 // 之前是这样的
 // axios.defaults.baseURL= 'https://api.example.com';
@@ -33,7 +34,24 @@ import axios from 'axios'
 // 创建一个 axios 实例,说白了就是复制了一个axios
 // 我们通过这个实例云发请求,把需要的配置配置给这个实例来发请求
 const request = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn' // 请求的基础路径
+  baseURL: 'http://ttapi.research.itcast.cn', // 请求的基础路径
+  // 定义后端返回原始数据的处理
+  // 参数 data 就是后端返回的原始数据(未经处理的JSON格式数据)
+  transformResponse: [function (data) {
+    // axios 默认在内部使用 JSON.parse 来转换处理原始数据
+    // return JSON.parse(data)
+    // 后端返回的数据可能不是JSON格式字符串
+    // 如果不是的话,那么 JSONbig.parse 调用就会报错
+    // 所以我们使用try-catch来捕获异常,处理异常的发生
+    try {
+      // 如果转换成功,则直接把结果返回
+      return JSONbig.parse(data)
+    } catch (err) {
+      // 如果转换失败了,则进入这里
+      // 我们在这里把数据原封不动的直接返回给请求使用
+      return data
+    }
+  }]
 })
 
 // 请求拦截器
