@@ -32,9 +32,47 @@ export const getArticleChannels = () => {
  */
 export const deleteArticle = articleId => {
   return request({
-    method: 'DELETE',
+    method: 'POST',
     // 接口文档中写的路径参数需要在url中传递
     // 凡是看见接口路径中有 :xxx 格式字段,则需要传递路径参数
+    url: `/mp/v1_0/articles/${articleId}`
+  })
+}
+
+/**
+ * 发表文章
+ */
+export const addArticle = (data, draft = false) => {
+  return request({
+    method: 'POST',
+    url: '/mp/v1_0/articles',
+    params: {
+      draft // 是否存为草稿（true为草稿)
+    },
+    data
+  })
+}
+
+/**
+ * 修改文章
+ */
+export const updateArticle = (articleId, data, draft = false) => {
+  return request({
+    method: 'PUT',
+    url: `/mp/v1_0/articles/${articleId}`,
+    params: {
+      draft // 是否存为草稿（true为草稿)
+    },
+    data
+  })
+}
+
+/**
+ * 获取指定文章
+ */
+export const getArticle = articleId => {
+  return request({
+    method: 'GET',
     url: `/mp/v1_0/articles/${articleId}`
   })
 }

@@ -151,6 +151,7 @@
                 size="mini"
                 type="primary"
                 circle
+                @click="$router.push('/publish?id='+scope.row.id)"
               ></el-button>
             <el-button
               icon="el-icon-delete"
@@ -269,8 +270,7 @@ export default {
           // 删除成功，更新当前页的文章数据列表
           this.loadArticles(this.page)
         })
-      }).catch(() => {
-      })
+      }).catch(() => {})
     }
   }
 }
