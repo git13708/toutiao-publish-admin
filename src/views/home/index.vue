@@ -32,7 +32,7 @@ export default {
       mapStyle: 'amap://styles/8b6be8ec497009e17a708205348b899a', // 设置地图样式
       events: {
         init (o) {
-          console.log(o.getCenter())
+          // console.log(o.getCenter())
         },
         zoomchange: (e) => {
           console.log(e)
@@ -43,7 +43,7 @@ export default {
           console.log(e)
         },
         click: e => {
-          alert('map clicked')
+          console.dir(e)
         }
       },
       // 使用其他组件
@@ -52,7 +52,7 @@ export default {
           pName: 'Scale',
           events: {
             init (instance) {
-              console.log(instance)
+              // console.log(instance)
             }
           }
         },
@@ -60,7 +60,7 @@ export default {
           pName: 'ToolBar',
           events: {
             init (instance) {
-              console.log(instance)
+              // console.log(instance)
             }
           }
         }
