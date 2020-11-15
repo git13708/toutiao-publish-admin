@@ -35,7 +35,7 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>设置</el-dropdown-item>
+            <el-dropdown-item @click.native="$router.push('/settings')">设置</el-dropdown-item>
             <!--
               组件默认是不识别原生事件的,除非内部做了处理
              -->
@@ -55,6 +55,8 @@
 <script>
 import AppAside from './components/aside.vue'
 import { getUserProfile } from '@/api/user'
+import globalBus from '@/utils/global-bus'
+
 export default {
   name: 'LayoutIndex',
   components: { AppAside },
@@ -70,6 +72,12 @@ export default {
   created () {
     // 组件初始化好,请求获取用户资料
     this.loadUserProfile()
+    // 注册自定义事件
+    // 当这个事件发布以后,这个注册函数才会执行
+    globalBus.$on('update-user', (data) => {
+      this.user.name = data.name
+      this.user.photo = data.photo
+    })
   },
   mounted () {},
   methods: {
